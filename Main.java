@@ -1,5 +1,4 @@
 import java.util.ArrayList;
-import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Main {
@@ -54,11 +53,11 @@ public class Main {
                 System.out.println("Jedes Crewmitglied erhält " + getBeuteJeMitglied() + getBeuteartZufallsBeute() );
                 // Berechnung Gold Captain
                 beuteCaptain = beute - beuteCrew;
-                System.out.println("Unser Captain hat " + getBeuteCaptain() + getBeuteartZufallsBeute() );
+                System.out.println("Unser Captain hat " + getBeuteCaptain() + getBeuteartZufallsBeute() + " erhalten" );
 
 
                 // Erneute Spielabfrage
-                System.out.println("Wollt ihr erneut auf Beutezug gehen, das Spiel beenden oder einen neuen erbeutbaren Gegenstand hinzufügen ? Fürs spielen bitte die 0 wählen, zum spielen die 1 und zum hinzufügen von Beute die 2");
+                System.out.println("Wollt ihr erneut auf Beutezug gehen, das Spiel beenden oder einen neuen erbeutbaren Gegenstand hinzufügen ? Fürs beenden bitte die 0 wählen, zum spielen die 1 und zum hinzufügen von Beute die 2");
                 spielAuswahl= scan.nextInt();
                 if (spielAuswahl == 2){
                     beuteHinzufügen();
@@ -73,7 +72,7 @@ public class Main {
     }
 
     // getters n setters
-    public static double getBeuteCaptain() {
+    public static int getBeuteCaptain() {
         return beuteCaptain;
     }
 
@@ -97,13 +96,13 @@ public class Main {
     }
 
     protected static void beuteErmitteln(){
-        int beuteartZufallsZahl;
+        double beuteartZufallsZahl;
 
         // Hier wird die Art der Beute ermittelt
-        beuteartZufallsZahl = (int) (Math.random()* beuteArten.size());
+        beuteartZufallsZahl = (Math.random()* beuteArten.size());
         beuteartZufallsZahl = Math.round(beuteartZufallsZahl) -1;
         beuteartZufallsBeute = String.valueOf(beuteArten.get((int) beuteartZufallsZahl));
-        System.out.println(beuteartZufallsZahl);
+
 
 
     }
@@ -111,19 +110,21 @@ public class Main {
     private static void beuteHinzufügen(){
       String neueBeute;
 
-        Scanner scan = new Scanner(System.in);
+        Scanner scan1 = new Scanner(System.in);
+        Scanner scan2 = new Scanner(System.in);
       while (spielAuswahl == 2)
         try {
             System.out.println("Hier kannst du deine eigenen Ideen für Beute, welche du mit Captain Ciao erbeuten kannst hinzufügen");
-            neueBeute = scan.next();
+            neueBeute = scan1.next();
             beuteArten.add(neueBeute);
             beuteErmitteln();
             System.out.println("Um einen weiteren Gegenstand hinzuzufügen bitte erneut die 2 wählen, ansonsten wieder die 1 zum weiterspielen und die 0 zum beenden");
-            spielAuswahl = scan.nextInt();
+            spielAuswahl = scan2.nextInt();
+
         }  catch (Exception InputMismatchException){
             System.out.println("Bitte gib eine gültige Zahl ein");
         }
-      scan.close();
+
 
     }
 

@@ -12,8 +12,11 @@ public class Main {
     private static int banditenAnzahl;
 
     private static int spielAuswahl = 1;
-    public static ArrayList beuteArten = new ArrayList<String>();
+    private static ArrayList beuteArten = new ArrayList<String>();
 
+
+    // Scanner
+    private static Scanner scan = new Scanner(System.in);
     // Wenn spielBeenden 1 ist, wird das Spiel beendet
 
     public static void main(String[] args) {
@@ -29,7 +32,6 @@ public class Main {
     protected static void spielen() {
 
         // Hier wird unser Scanner definiert
-        Scanner scan = new Scanner(System.in);
         while (spielAuswahl !=0) {
             // Die BeuteArt wird jede Rund neu ermittelt
             beuteErmitteln();
@@ -37,7 +39,7 @@ public class Main {
             // Auffangen von Fehlern
             try {
 
-                banditenAnzahl = scan.nextInt();
+                banditenAnzahl = getScan().nextInt();
                 double beuteMengeUngerundet;
                 // Hier wird die Anzahl der Beute ermittelt
                 beuteMengeUngerundet = Math.random() * 100 + 100;
@@ -58,7 +60,7 @@ public class Main {
 
                 // Erneute Spielabfrage
                 System.out.println("Wollt ihr erneut auf Beutezug gehen, das Spiel beenden oder einen neuen erbeutbaren Gegenstand hinzufügen ? Fürs beenden bitte die 0 wählen, zum spielen die 1 und zum hinzufügen von Beute die 2");
-                spielAuswahl= scan.nextInt();
+                spielAuswahl= getScan().nextInt();
                 if (spielAuswahl == 2){
                     beuteHinzufügen();
                 }
@@ -100,26 +102,30 @@ public class Main {
 
         // Hier wird die Art der Beute ermittelt
         beuteartZufallsZahl = (Math.random()* beuteArten.size());
-        beuteartZufallsZahl = Math.round(beuteartZufallsZahl) -1;
+        beuteartZufallsZahl = ((int) Math.floor(beuteartZufallsZahl));
+
+
         beuteartZufallsBeute = String.valueOf(beuteArten.get((int) beuteartZufallsZahl));
 
 
 
     }
 
+    public static Scanner getScan() {
+        return scan;
+    }
+
     private static void beuteHinzufügen(){
       String neueBeute;
 
-        Scanner scan1 = new Scanner(System.in);
-        Scanner scan2 = new Scanner(System.in);
       while (spielAuswahl == 2)
         try {
             System.out.println("Hier kannst du deine eigenen Ideen für Beute, welche du mit Captain Ciao erbeuten kannst hinzufügen");
-            neueBeute = scan1.next();
+            neueBeute = getScan().nextLine();
             beuteArten.add(neueBeute);
             beuteErmitteln();
             System.out.println("Um einen weiteren Gegenstand hinzuzufügen bitte erneut die 2 wählen, ansonsten wieder die 1 zum weiterspielen und die 0 zum beenden");
-            spielAuswahl = scan2.nextInt();
+            spielAuswahl = getScan().nextInt();
 
         }  catch (Exception InputMismatchException){
             System.out.println("Bitte gib eine gültige Zahl ein");
